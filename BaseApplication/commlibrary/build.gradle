@@ -4,6 +4,18 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
 
+    //避免 库打包一直为BuilderConfig = false 的问题
+    productFlavors {
+        create('all') {
+        }
+    }
+    publishNonDefault true
+
+    configurations {
+        allDebug
+        allRelease
+    }
+
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 25

@@ -1,5 +1,7 @@
-package com.threeti.empty.activity;
+package com.threeti.empty.activity.comm;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -14,8 +16,15 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 
+/**
+ * APP的登录界面  TODO 实现定制APP的UI
+ */
+public class LoginActivity extends SubcribeCreateDestroyActivity {
 
-public class MainActivity extends SubcribeCreateDestroyActivity {
+    public static final Intent newIntent(Context packageContext){
+        Intent intent = new Intent(packageContext, LoginActivity.class) ;
+        return intent ;
+    }
 
     @Override
     public void initData() {
@@ -30,7 +39,7 @@ public class MainActivity extends SubcribeCreateDestroyActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.act_main);
         UserService userService = new UserService() ;
         userService.login(null);
     }
