@@ -1,6 +1,7 @@
 package com.threeti.activity;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import com.threeti.inface.IUiCallBack;
 import com.threeti.net.APIError;
 import com.threeti.net.APIFail;
 import com.threeti.net.BaseModel;
+import com.threeti.utils.ToastUtil;
 
 import java.net.SocketTimeoutException;
 
@@ -38,10 +40,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IUiCallB
 	}
 
 	public void showToast(String text){
-		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+		ToastUtil.show(this, text, Toast.LENGTH_SHORT);
 	}
-	public void showToast(int res){
-		Toast.makeText(this, getResources().getText(res), Toast.LENGTH_SHORT).show();
+	public void showToast(@IdRes int res){
+		ToastUtil.show(this, res, Toast.LENGTH_SHORT);
 	}
 
 

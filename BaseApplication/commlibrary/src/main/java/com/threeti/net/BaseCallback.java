@@ -7,7 +7,7 @@ import com.threeti.activity.ActivityManager;
 import com.threeti.commlibrary.R;
 import com.threeti.dialog.CustomProgressDialog;
 import com.threeti.inface.IUiCallBack;
-import com.threeti.log.LoggerService;
+import com.threeti.log.LoggerManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,9 +40,9 @@ public class BaseCallback<T> implements Callback<BaseModel<T>> {
     public void onResponse(Call<BaseModel<T>> call, Response<BaseModel<T>> response) {
         if (response.isSuccessful() && response.errorBody() == null) {
             BaseModel<T> model = response.body();
-            LoggerService.d(model);
+            LoggerManager.d(model);
             if (model == null) {
-                LoggerService.e("数据解析出现异常");
+                LoggerManager.e("数据解析出现异常");
                 mIUiCallBack.processNetFailEvent(new APIFail(response.code(), response.message()));
             } else if(!model.isSuccess()){ //业务逻辑错误
                 mIUiCallBack.processNetFailEvent(new APIFail( model.getSubFailStatus(), model.getMessage()));
@@ -51,7 +51,7 @@ public class BaseCallback<T> implements Callback<BaseModel<T>> {
             }
         } else { //an application-level failure such as a 404 or 500
             mIUiCallBack.processNetFailEvent(new APIFail( response.code(), response.message()));
-            LoggerService.e( response.code() + ":" + response.message());
+            LoggerManager.e( response.code() + ":" + response.message());
         }
         mCustomProgressDialog.cancel();//网络请求结束
     }
@@ -63,7 +63,7 @@ public class BaseCallback<T> implements Callback<BaseModel<T>> {
     @Override
     @UiThread
     public void onFailure(Call call, Throwable throwable) { //失败
-        LoggerService.e("onFailure            " + throwable.getMessage());
+        LoggerManager.e("onFailure            " + throwable.getMessage());
         throwable.printStackTrace();
         mIUiCallBack.processNetErrorEvent(new APIError( throwable));
         mCustomProgressDialog.cancel(); //网络请求结束

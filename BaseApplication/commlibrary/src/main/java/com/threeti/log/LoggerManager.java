@@ -12,7 +12,7 @@ import com.threeti.commlibrary.BuildConfig;
  * Created by ztcao on 2017/7/12.
  */
 
-public class LoggerService {
+public class LoggerManager {
     
     /**
      * 初始化日志系统
@@ -37,7 +37,7 @@ public class LoggerService {
             }
         });
         Logger.addLogAdapter(new DiskLogAdapter(){
-            @Override public boolean isLoggable(int priority, String tag) {
+            @Override public boolean isLoggable(int priority, String tag) { //
                 return BuildConfig.DEBUG ;
             }
         });
