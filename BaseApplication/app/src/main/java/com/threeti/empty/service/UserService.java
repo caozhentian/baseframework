@@ -2,6 +2,7 @@ package com.threeti.empty.service;
 
 import com.threeti.empty.model.User;
 import com.threeti.empty.repository.UserRepository;
+import com.threeti.inface.IUiCallBack;
 import com.threeti.service.BaseService;
 
 /**
@@ -10,12 +11,10 @@ import com.threeti.service.BaseService;
 
 public class UserService extends BaseService {
 
-
-
     private UserRepository mUserRepository ;
 
-    public UserService() {
-        mUserRepository = new UserRepository() ;
+    public UserService(IUiCallBack iUiCallBack) {
+        mUserRepository = new UserRepository(iUiCallBack) ;
     }
 
     public void login(User user){

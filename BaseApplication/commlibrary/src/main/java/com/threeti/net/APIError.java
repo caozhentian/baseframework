@@ -7,6 +7,10 @@ public class APIError {
 		this.throwable = throwable;
 	}
 
+	public APIError( Throwable throwable) {
+		this.throwable = throwable;
+	}
+
 	private int todo_code;
 	private Throwable throwable;
 

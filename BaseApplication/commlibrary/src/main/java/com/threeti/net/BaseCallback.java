@@ -2,19 +2,19 @@ package com.threeti.net;
 
 import android.content.Context;
 import android.support.annotation.UiThread;
-import android.util.Log;
 
 import com.threeti.activity.ActivityManager;
 import com.threeti.commlibrary.R;
 import com.threeti.dialog.CustomProgressDialog;
-import com.threeti.event.EventBusUtil;
+import com.threeti.inface.IUiCallBack;
+import com.threeti.log.LoggerService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by ztcao on 2017/2/4.
+/**网络请求的回调处理 运行在UI线程
+ * Created by ztcao on 2017/7/12
  */
 
 public class BaseCallback<T> implements Callback<BaseModel<T>> {
@@ -22,12 +22,12 @@ public class BaseCallback<T> implements Callback<BaseModel<T>> {
     public static final String TAG = "BaseCallback" ;
 
     //区分是哪个网络接口的请求
-    private volatile  int mApiOperationCode ;
+    private volatile IUiCallBack mIUiCallBack  ;
 
     CustomProgressDialog mCustomProgressDialog ;
     @UiThread
-    public BaseCallback(int apiOperationCode) {
-        mApiOperationCode = apiOperationCode;
+    public BaseCallback(IUiCallBack iUiCallBack) {
+        mIUiCallBack  = iUiCallBack;
         //UI层收到可展现进度条
         Context context = ActivityManager.getTopActivity() ;
         mCustomProgressDialog = new CustomProgressDialog(context , R.style.dialog) ;
@@ -40,18 +40,18 @@ public class BaseCallback<T> implements Callback<BaseModel<T>> {
     public void onResponse(Call<BaseModel<T>> call, Response<BaseModel<T>> response) {
         if (response.isSuccessful() && response.errorBody() == null) {
             BaseModel<T> model = response.body();
+            LoggerService.d(model);
             if (model == null) {
-                Log.e(TAG, "数据解析出现异常");
-                EventBusUtil.post(new APIFail(mApiOperationCode ,response.code(), response.message()));
+                LoggerService.e("数据解析出现异常");
+                mIUiCallBack.processNetFailEvent(new APIFail(response.code(), response.message()));
             } else if(!model.isSuccess()){ //业务逻辑错误
-                EventBusUtil.post(new APIFail(mApiOperationCode ,model.getSubFailStatus(), model.getMessage()));
+                mIUiCallBack.processNetFailEvent(new APIFail( model.getSubFailStatus(), model.getMessage()));
             }else {
-                model.setApiOperationCode(mApiOperationCode);
-                EventBusUtil.post(model);
+                mIUiCallBack.processNetSuccessEvent(model);
             }
         } else { //an application-level failure such as a 404 or 500
-            EventBusUtil.post(new APIFail(mApiOperationCode ,response.code(), response.message()));
-            Log.e(TAG, response.code() + ":" + response.message());
+            mIUiCallBack.processNetFailEvent(new APIFail( response.code(), response.message()));
+            LoggerService.e( response.code() + ":" + response.message());
         }
         mCustomProgressDialog.cancel();//网络请求结束
     }
@@ -63,9 +63,9 @@ public class BaseCallback<T> implements Callback<BaseModel<T>> {
     @Override
     @UiThread
     public void onFailure(Call call, Throwable throwable) { //失败
-        Log.e(TAG, "onFailure            " + throwable.getMessage());
+        LoggerService.e("onFailure            " + throwable.getMessage());
         throwable.printStackTrace();
-        EventBusUtil.post(new APIError(mApiOperationCode, throwable));
+        mIUiCallBack.processNetErrorEvent(new APIError( throwable));
         mCustomProgressDialog.cancel(); //网络请求结束
     }
 

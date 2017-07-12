@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.threeti.inface.IUiCallBack;
 import com.threeti.net.APIError;
 import com.threeti.net.APIFail;
 import com.threeti.net.BaseModel;
@@ -17,7 +18,7 @@ import java.net.SocketTimeoutException;
 /**
  * Created by ztcao on 2016/12/20. Activity的基类
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements IUiCallBack{
 
 	public abstract void initData();
 	public abstract void initView();
@@ -44,25 +45,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 	}
 
 
-	public void processSuccessEvent(@NonNull BaseModel baseModel) {
+	public void processNetSuccessEvent(@NonNull BaseModel baseModel) {
 		if(baseModel.isSuccess()){
-			dealSuccess(baseModel) ;
-		}
-		else{
-			showToast(baseModel.getMessage());
+			dealNetSuccess(baseModel) ;
 		}
 	}
 
-	public void processErrorEvent(@NonNull APIError apiErrorError) {
+	public void processNetErrorEvent(@NonNull APIError apiErrorError) {
 		if(apiErrorError.getThrowable() instanceof SocketTimeoutException){
 			showToast("网络连接超时。请检查网络");
 		}
 		else{
-			showToast("未知错误");
+			showToast(apiErrorError.getThrowable().getMessage());
 		}
 	}
 
-	public void processFailEvent(@NonNull APIFail apiFail) {
+	public void processNetFailEvent(@NonNull APIFail apiFail) {
 		if(apiFail.getCode() == BaseModel.SUB_FAIL_STATUS_TOKEN_EXPIRE){
 			showTokenExpireDialog() ;
 		}
@@ -72,12 +70,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 	}
 
 	/**
-	 *
+	 *子类实现 处理网络返回的具体逻辑
 	 * @param baseModel
 	 */
-	protected<T> void dealSuccess(BaseModel baseModel){
-
-	}
+	abstract protected void dealNetSuccess(BaseModel baseModel)  ;
 
 	public void showTokenExpireDialog(){
 //		OKCancelDlg.createCancelOKDlg(this, "登录超时", "重新登录", "退出应用", new ICancelOK() {
