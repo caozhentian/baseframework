@@ -9,6 +9,8 @@ import android.text.format.Time;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import com.threeti.file.FileManager;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
@@ -186,10 +188,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             Time t = new Time("GMT+8");
             t.setToNow(); // 取得系统时间
             int date = t.year * 10000 + t.month * 100 + t.monthDay;
-            int time = t.hour * 10000 + t.minute * 100 + t.second;
+            int time = t.hour* 10000 + t.minute * 100 + t.second;
             String fileName = "crash-" + date + "-" + time + CRASH_REPORTER_EXTENSION;
-            FileOutputStream trace = mContext.openFileOutput(fileName,
-                    Context.MODE_PRIVATE);
+//            FileOutputStream trace = mContext.openFileOutput(fileName,
+//                    Context.MODE_PRIVATE);
+            FileOutputStream trace = new FileOutputStream(FileManager.CRASH_PATH) ;
             mDeviceCrashInfo.store(trace, "");
             trace.flush();
             trace.close();

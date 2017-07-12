@@ -40,7 +40,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void dealNetSuccess(BaseModel baseModel) {
-
+         Object o = null ;
+        o.toString() ;
     }
 
 

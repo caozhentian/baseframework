@@ -2,6 +2,7 @@ package com.threeti.application;
 
 import android.app.Application;
 
+import com.threeti.log.CrashHandler;
 import com.threeti.log.LoggerManager;
 
 /**
@@ -15,5 +16,6 @@ public class BaseApplication extends Application {
         super.onCreate();
         //初始化日志
         LoggerManager.init();
+        CrashHandler.getInstance().init(this);
     }
 }
