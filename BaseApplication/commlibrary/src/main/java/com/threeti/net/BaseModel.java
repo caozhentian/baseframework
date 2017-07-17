@@ -26,7 +26,7 @@ public class BaseModel<T> {
 	//status值为success，如果需要 可进一步说明成功 子状态
 	protected int subSuccessStatus   ;
 
-	//status值为fail ，如果需要 可进一步说失败的子状态
+	//status值为fail ，如果需要 可进一步说失败的子状态 ，为了与Http 状态码区分，建议从10000开始定义
 	protected int subFailStatus       ;
 
 	//失败原因或者成功描述信息！

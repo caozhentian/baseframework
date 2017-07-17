@@ -1,7 +1,6 @@
 package com.threeti.empty.repository;
 
 import com.threeti.empty.config.IpConfig;
-import com.threeti.inface.IUiCallBack;
 import com.threeti.repository.BaseRepository;
 
 /**
@@ -10,11 +9,11 @@ import com.threeti.repository.BaseRepository;
 
 public class BaseSubRepository extends BaseRepository {
 
-    public BaseSubRepository(IUiCallBack  iUiCallBack ) {
-        super(IpConfig.BASE_URL , iUiCallBack);
+    public BaseSubRepository() {
+        super(IpConfig.BASE_URL);
     }
 
-    public BaseSubRepository( String url , IUiCallBack  iUiCallBack ) {
-        super( url , iUiCallBack );
+    public BaseSubRepository( String url ) {
+        super( url );
     }
 }

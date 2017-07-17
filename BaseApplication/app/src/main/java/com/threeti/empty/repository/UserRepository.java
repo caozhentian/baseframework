@@ -15,14 +15,14 @@ import retrofit2.Call;
 public class UserRepository extends BaseSubRepository {
     protected UserApi mUserApi ;
 
-    public UserRepository(IUiCallBack iUiCallBack) {
-        super(iUiCallBack)  ;
+    public UserRepository() {
+        super()  ;
         mUserApi  = mRetrofit.create(UserApi.class);
     }
 
-    public void login(User user){
+    public void login(User user, IUiCallBack<User> iUiCallBack){
         Call<BaseModel<User>> call   =  mUserApi.login(user.getUserName() , user.getPassword()) ;
-        call.enqueue(new BaseCallback<User>(mIUiCallBack));
+        call.enqueue(new BaseCallback<User>(iUiCallBack));
     }
 
 }

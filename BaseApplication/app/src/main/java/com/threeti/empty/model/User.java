@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
+
     @SerializedName("userName")
     private String mUserName  ;
 
@@ -41,5 +42,14 @@ public class User {
 
     public void setTelphone(String telphone) {
         mTelphone = telphone;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "mUserName='" + mUserName + '\'' +
+                ", mPassword='" +  + '\'' +
+                ", mTelphone='" + mTelphone + '\'' +
+                '}';
     }
 }

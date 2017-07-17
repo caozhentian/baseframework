@@ -10,9 +10,13 @@ import com.threeti.net.BaseModel;
  * Created by ztcao on 2017/7/12.
  */
 
-public interface IUiCallBack {
+public interface IUiCallBack<T> {
 
-    public void processNetSuccessEvent(@NonNull BaseModel baseModel) ;
+    public void processNetSuccessEvent(@NonNull BaseModel<T> baseModel) ;
+
+    public void processBusinessSuccessEvent(@NonNull BaseModel<T> baseModel) ;
+
+    public void processBusinessFailEvent(@NonNull BaseModel<T> baseModel)    ;
 
     public void processNetErrorEvent(@NonNull APIError apiErrorError) ;
 

@@ -1,6 +1,5 @@
 package com.threeti.repository;
 
-import com.threeti.inface.IUiCallBack;
 import com.threeti.net.RetrofitFactory;
 
 import retrofit2.Retrofit;
@@ -12,10 +11,7 @@ import retrofit2.Retrofit;
 public class BaseRepository {
     protected Retrofit mRetrofit ;
 
-    protected IUiCallBack mIUiCallBack ;
-
-    public BaseRepository(String url , IUiCallBack iUiCallBack) {
+    public BaseRepository(String url ) {
         mRetrofit      =  RetrofitFactory.getBaseRetrofit(url);
-        mIUiCallBack   =  iUiCallBack ;
     }
 }

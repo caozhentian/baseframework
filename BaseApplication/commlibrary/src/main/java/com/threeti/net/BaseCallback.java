@@ -21,10 +21,11 @@ public class BaseCallback<T> implements Callback<BaseModel<T>> {
 
     public static final String TAG = "BaseCallback" ;
 
-    //区分是哪个网络接口的请求
+    //处理相关的UI操作和逻辑
     private volatile IUiCallBack mIUiCallBack  ;
 
     CustomProgressDialog mCustomProgressDialog ;
+
     @UiThread
     public BaseCallback(IUiCallBack iUiCallBack) {
         mIUiCallBack  = iUiCallBack;
@@ -45,7 +46,7 @@ public class BaseCallback<T> implements Callback<BaseModel<T>> {
                 LoggerManager.e("数据解析出现异常");
                 mIUiCallBack.processNetFailEvent(new APIFail(response.code(), response.message()));
             } else if(!model.isSuccess()){ //业务逻辑错误
-                mIUiCallBack.processNetFailEvent(new APIFail( model.getSubFailStatus(), model.getMessage()));
+                mIUiCallBack.processNetSuccessEvent(model);
             }else {
                 mIUiCallBack.processNetSuccessEvent(model);
             }

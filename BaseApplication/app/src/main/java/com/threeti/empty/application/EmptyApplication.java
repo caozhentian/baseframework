@@ -7,9 +7,14 @@ import com.threeti.application.BaseApplication;
  */
 
 public class EmptyApplication extends BaseApplication {
+
+    public static  EmptyApplication sEmptyApplication ;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        sEmptyApplication = this ;
         //TODO  加入应用需要的初始化逻辑
     }
+
 }
