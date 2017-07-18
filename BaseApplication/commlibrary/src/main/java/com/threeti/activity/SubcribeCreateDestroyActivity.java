@@ -4,10 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.threeti.event.Event;
 import com.threeti.event.EventBusUtil;
-import com.threeti.net.APIError;
-import com.threeti.net.APIFail;
-import com.threeti.net.BaseModel;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -31,18 +29,9 @@ public abstract class SubcribeCreateDestroyActivity extends BaseActivity{
 	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
-	public void processErrorEvent(@NonNull APIError apiErrorError) {
+	public void processEvent(@NonNull Event Event) {
 
 	}
 
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	public void processFailEvent(@NonNull APIFail apiFail) {
-
-	}
-
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	public void processSuccessEvent(@NonNull BaseModel baseModel) {
-
-	}
 }
  

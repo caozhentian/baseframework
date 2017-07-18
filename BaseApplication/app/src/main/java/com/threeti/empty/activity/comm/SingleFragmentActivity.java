@@ -3,15 +3,15 @@ package com.threeti.empty.activity.comm;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
+import com.threeti.activity.BaseActivity;
 import com.threeti.empty.R;
 
 /**
  * Created by Administrator on 2017/6/15.
  */
 
- public abstract class SingleFragmentActivity extends AppCompatActivity {
+ public abstract class SingleFragmentActivity extends BaseActivity {
 
     public static final String ARGS_TITLE         =  "title"       ;
 
