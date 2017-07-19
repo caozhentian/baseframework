@@ -7,12 +7,13 @@ import com.threeti.log.CrashHandler;
 import com.threeti.log.LoggerManager;
 
 /**
- * Created by Administrator on 2017/7/12.
+ * Created by ztcao on 2017/7/12.
  */
 
 public class BaseApplication extends Application {
 
     private static AppStatusTracker tracker = new AppStatusTracker();
+
     @Override
     public void onCreate() {
         super.onCreate();

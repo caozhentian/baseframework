@@ -8,7 +8,7 @@ android {
         //TODO 修改为工程的实际包名
         applicationId "com.threeti.empty"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -18,6 +18,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+}
+
+//添加一个本地仓库，并把libs目录作为仓库的地址
+repositories {
+    flatDir {
+        dirs 'libs'
     }
 }
 
@@ -32,6 +39,12 @@ dependencies {
     //依赖library
     debugCompile project(path: ':commlibrary', configuration: 'allDebug')
     releaseCompile project(path: ':commlibrary', configuration: 'allRelease')
+//    debugCompile project(path: ':android-pulltorefresh-2.1.1library', configuration: 'allDebug')
+//    releaseCompile project(path: ':android-pulltorefresh-2.1.1library', configuration: 'allRelease')
+//    debugCompile project(path: ':android-pulltorefresh-2.1.1library', configuration: 'allDebug')
+//    releaseCompile project(path: ':android-pulltorefresh-2.1.1library', configuration: 'allRelease')
+    debugCompile(name: 'android-pulltorefresh-2.1.1-debug', ext: 'aar')
+    releaseCompile(name: 'android-pulltorefresh-2.1.1-release', ext: 'aar')
     compile 'com.jakewharton:butterknife:8.7.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
 }
